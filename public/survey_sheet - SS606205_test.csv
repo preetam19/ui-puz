@@ -1,0 +1,107 @@
+question_id,Question,Matrix,Visualisation,Manual Answer,pythoncode,Program Answer,Explanation,LLM Answer
+QQ720893,How many distinct shapes of green objects are there in the matrix?,"[[3,3,1,4,3,3,2], [3,3,6,5,3,6,7], [8,9,3,0,3,3,3], [0,3,3,3,0,0,0], [0,3,0,3,0,0,0], [0,3,3,3,0,3,0], [0,0,0,0,0,3,3]]","🟩🟩🔳🔳🟩🟩🔳
+🟩🟩🔳🔳🟩🔳🔳
+🔳🔳🟩🔳🟩🟩🟩
+🔳🟩🟩🟩🔳🔳🔳
+🔳🟩🔳🟩🔳🔳🔳
+🔳🟩🟩🟩🔳🟩🔳
+🔳🔳🔳🔳🔳🟩🟩
+",4,"
+def answer(matrix):
+    def flood_fill(i, j, shape):
+        if (i < 0 or i >= len(matrix) or
+            j < 0 or j >= len(matrix[0]) or
+            matrix[i][j] != 3 or
+            (i, j) in visited):
+            return
+        
+        visited.add((i, j))
+        shape.add((i, j))
+        
+        # Check neighbors (up, down, left, right)
+        flood_fill(i-1, j, shape)
+        flood_fill(i+1, j, shape)
+        flood_fill(i, j-1, shape)
+        flood_fill(i, j+1, shape)
+
+    visited = set()
+    shapes = []
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 3 and (i, j) not in visited:
+                shape = set()
+                flood_fill(i, j, shape)
+                shapes.append(shape)
+
+    return len(shapes)
+
+# Test the function with the provided test matrix
+test_matrix = [[0,3,0,0,0,3,0], [3,3,3,0,3,3,3], [0,3,0,0,0,3,0], [0,0,0,3,0,0,0], [0,0,3,3,3,0,0], [0,3,3,3,3,3,0], [3,3,3,3,3,3,3]]
+
+result = answer(test_matrix)
+print(f""Number of distinct green shapes: {result}"")
+",4,"In this 7x7 matrix, there are 4 distinct shapes of green objects (represented by the value 3):
+1. A 2x2 square in the top-left corner
+2. An L-shaped object in the top-right and middle-right
+3. A T-shaped object in the middle-left
+4. A 1x2 rectangle in the bottom-right corner
+Each of these shapes is unique, so there are 4 distinct shapes of green objects.",4
+QQ983035,How many distinct shapes of green objects are there in the matrix?,"[[3,0,0,3,3], [3,3,0,3,3], [0,3,3,3,0], [0,0,3,0,0], [3,3,3,3,3]]","🟩🔳🔳🟩🟩
+🟩🟩🔳🟩🟩
+🔳🟩🟩🟩🔳
+🔳🔳🟩🔳🔳
+🟩🟩🟩🟩🟩
+",1,"
+def answer(matrix):
+    def flood_fill(i, j, shape):
+        if (i < 0 or i >= len(matrix) or
+            j < 0 or j >= len(matrix[0]) or
+            matrix[i][j] != 3 or
+            (i, j) in visited):
+            return
+        
+        visited.add((i, j))
+        shape.add((i, j))
+        
+        # Check neighbors (up, down, left, right)
+        flood_fill(i-1, j, shape)
+        flood_fill(i+1, j, shape)
+        flood_fill(i, j-1, shape)
+        flood_fill(i, j+1, shape)
+
+    visited = set()
+    shapes = []
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 3 and (i, j) not in visited:
+                shape = set()
+                flood_fill(i, j, shape)
+                shapes.append(shape)
+
+    return len(shapes)
+
+# Test the function with the provided test matrix
+test_matrix = [[0,3,0,0,0,3,0], [3,3,3,0,3,3,3], [0,3,0,0,0,3,0], [0,0,0,3,0,0,0], [0,0,3,3,3,0,0], [0,3,3,3,3,3,0], [3,3,3,3,3,3,3]]
+
+result = answer(test_matrix)
+print(f""Number of distinct green shapes: {result}"")
+",1,"To determine the number of distinct shapes of green objects in the matrix, we need to analyze the connected groups of cells with the value 3 (which represents green). Let's examine the matrix carefully:
+
+1. The matrix contains a single, large, irregular green object that spans across multiple rows and columns. This object includes:
+   - The entire bottom row (5th row)
+   - The right side of the first two rows
+   - The middle three cells of the third row
+   - The top-left cell
+   - The single cell in the middle of the fourth row
+
+2. All green cells (3s) in the matrix are connected either horizontally, vertically, or both. This means they form a single continuous shape.
+
+3. The cell in the top-left corner (position [0,0]) is connected to the cell below it (position [1,0]).
+
+4. The seemingly isolated cell in the fourth row (position [3,2]) is actually connected to the cells above and below it (positions [2,2] and [4,2]).
+
+Since all green cells are interconnected, they form a single, complex shape. There are no isolated green cells or separate green objects in this matrix.
+
+Therefore, there is only 1 distinct shape of green object in the matrix.",3
